@@ -4,14 +4,13 @@
         "name": "Launch",
         "type": "node",
         "request": "launch",
-        "program": "${workspaceRoot}/arrays.js",
-        "runtimeExecutable": "${execPath}",
-        "args": [
-            "--extensionDevelopmentPath=${workspaceRoot}"
-        ],
+        "program": "${workspaceRoot}/UsingObjects/remove-elements.js",
+        "runtimeExecutable": null,
+        "cwd": "${workspaceRoot}",
+        "args": [],
         "stopOnEntry": false,
         "sourceMaps": true,
-        "outDir": "${workspaceRoot}/out",
-        "preLaunchTask": "npm"
+        "outDir": null,
+        "preLaunchTask": null
     }]
 }

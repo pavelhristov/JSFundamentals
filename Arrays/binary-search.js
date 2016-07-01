@@ -1,8 +1,8 @@
 function solve(args) {
     var input = args[0].split('\n').map(Number),
         N = input[0],
-        numbers = input.splice(1, N),
-        X = input[1],
+        X = input.pop(),
+        numbers = input,
         start = 0,
         end = N - 1,
         index = -1,
@@ -10,7 +10,7 @@ function solve(args) {
         currentItem;
     while (start <= end) {
         middle = (end + start) / 2;
-        currentItem = numbers[middle];
+        currentItem = numbers[middle + 1];
         if (currentItem === X) {
             index = middle;
             break;
