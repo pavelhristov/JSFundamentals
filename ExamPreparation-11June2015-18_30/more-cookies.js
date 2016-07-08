@@ -5,7 +5,6 @@ function solve(args) {
     let selectors = [];
     let current = null;
 
-
     for (let line of args) {
         if (isSelector(line)) {
             line = line.trim();
@@ -16,39 +15,38 @@ function solve(args) {
                 let between = " ";
                 if (selector[0] === "$") {
                     between = "";
-                    selector.substr(1);
+                    selector = selector.substr(1);
                 }
-                selector = '${current.selector}${between}${selector}';
+                selector = `${current.selector}${between}${selector}`;
             }
             selectors.push({
                 "selector": selector,
                 "parent": current,
                 "props": []
             });
-            //
+
+            current = selectors[selectors.length - 1];
         } else if (isProperty(line)) {
             line = line.trim();
-            line = line.substr(0, line.length - 1).trim();
-            let propValueArray = line.split(":").map(x => x.trim());
-            let propValuePair = {
+            line = line.substr(0, line.length - 1)
+                .trim();
+            let propValueArray = line.split(":")
+                .map(x => x.trim());
+
+            current.props.push({
                 "property": propValueArray[0],
                 "value": propValueArray[1]
-            };
-            let property, value;
-            current.props.push([property, value]);
+            });
         } else {
-            // }
-            if (current) {
-                current = current.parent;
-            }
             current = current.parent;
         }
     }
-    for (var selector of selectors) {
-        console.log('${selector.selector} {');
+    for (let selector of selectors) {
+        console.log(`${selector.selector} {`);
         for (let propertyValuePair of selector.props) {
-            //TODO: finish 
+            console.log(`  ${propertyValuePair.property}: ${propertyValuePair.value};`);
         }
+        console.log("}");
     }
 
     function isSelector(line) {
@@ -56,7 +54,7 @@ function solve(args) {
     }
 
     function isProperty(line) {
-        return line.indexOf(":") > 0;
+        return line.indexOf(":") >= 0;
     }
 }
 

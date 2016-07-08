@@ -4,7 +4,7 @@
         "name": "Launch",
         "type": "node",
         "request": "launch",
-        "program": "${workspaceRoot}/UsingObjects/remove-elements.js",
+        "program": "${workspaceRoot}/ExamPreparation-11June2015-18_30/app.js",
         "runtimeExecutable": null,
         "cwd": "${workspaceRoot}",
         "args": [],

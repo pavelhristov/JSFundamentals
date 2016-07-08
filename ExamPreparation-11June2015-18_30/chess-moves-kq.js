@@ -10,23 +10,27 @@ function solve(args) {
             let parts = moveString.split(" ");
             return {
                 "fromRow": getRowIndex(parts[0][1]),
-                "fromCol": getColIndex(parts[0][1]),
+                "fromCol": getColIndex(parts[0][0]),
                 "toRow": getRowIndex(parts[1][1]),
-                "toCol": getColIndex(parts[1][1])
+                "toCol": getColIndex(parts[1][0])
             };
         });
 
     moves.forEach(move => {
-        let piece = board[move.fromRow][move.fromCol];
-        //TODO: FIX !!!
-        if (isEmpty(board[move.toRow][move.toCol]) && isQueen(piece)) {
-            if (checkQueen(move)) {
+        let fromPiece = board[move.fromRow][move.fromCol],
+            toPiece = board[move.toRow][move.toCol];
+
+        if (isQueen(fromPiece)) {
+            if (isEmpty(toPiece) && checkQueen(move)) {
                 console.log("yes");
+            } else {
+                console.log("no");
             }
-        }
-        if (isEmpty(board[move.toRow][move.toCol]) && isKnight(piece)) {
-            if (checkKnight(move)) {
+        } else if (isKnight(fromPiece)) {
+            if (isEmpty(toPiece) && checkKnight(move)) {
                 console.log("yes");
+            } else {
+                console.log("no");
             }
         } else {
             console.log("no");
@@ -66,14 +70,11 @@ function solve(args) {
             [-1, -2],
             [-2, -1]
         ];
-        for (let delta of deltas) {
+        return deltas.find(delta => {
             let row = move.fromRow + delta[0],
                 col = move.fromCol + delta[1];
-            if (row === move.toRow && col === move.toCol) {
-                return true;
-            }
-        }
-        return false;
+            return (row === move.toRow && col === move.toCol) ? true : false;
+        });
     }
 
     function checkQueen(move) {
@@ -90,16 +91,16 @@ function solve(args) {
                 return false;
             }
             if (!isEmpty(board[row][col])) {
-                return true;
+                return false;
             }
-            if (move.toRow == row && move.toCol == col) {
+            if (move.toRow === row && move.toCol === col) {
                 return true;
             }
         }
     }
 
     function getDelta(from, to) {
-        return from > to ? -1 : (from < to) ? +1 : 0;
+        return (from > to) ? -1 : (from < to) ? +1 : 0;
 
     }
 }
